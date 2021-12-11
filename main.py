@@ -46,45 +46,6 @@ def bruh():
     print(ape)
 
 
-def find_game(name):
-    games = api.search(srcomapi.datatypes.Game, {"name": name})
-    for game in games:
-        # print(game.name)
-        if game.name == "Celeste":
-            return game
-    return None
-
-
-def find_category(game, name):
-    for category in game.categories:
-        if category.name == name:
-            return category
-    return None
-
-
-def find_user(username):
-    return dt.User(api, data=api.get("users/{}".format(username)))
-
-
-def get_personal_best(user, category):
-    for pb in user.personal_bests:
-        run = pb["run"]
-        if run.category == category.id:
-            return run
-
-
-def create_csv(pb_list):
-    df = pd.DataFrame({user: pb_list})
-    df.to_csv(r'/Users/minipewz/Documents/YFF/webscraping\\speedrunleaderboard.csv', index=False)
-
-
-def bruh():
-    data_frame = pd.read_json(leaderboard.content, orient='index').append(pd.leaderboard)
-    ape = data_frame.to_csv(r'/Users/minipewz/Documents/YFF/webscraping\\speedrunleaderboard.csv', index=False)
-
-    print(ape)
-
-
 if __name__ == "__main__":
     game = find_game("Celeste")
     category = find_category(game, "Any%")
