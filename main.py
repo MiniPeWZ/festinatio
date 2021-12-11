@@ -39,14 +39,6 @@ def find_user(username):
     return dt.User(api, data=api.get("users/{}".format(username)))
 
 
-game = find_game("Celeste")
-category = find_category(game, "Any%")
-#print(game)
-#print(category)
-user = find_user("MiniPeWZ")
-#print(user)
-
-
 def get_personal_best(user, category):
     for pb in user.personal_bests:
         run = pb["run"]
@@ -54,35 +46,9 @@ def get_personal_best(user, category):
             return run
 
 
-pb = get_personal_best(user, category)
-#print(pb)
-time = "primary_t"
-
-
-seconds = pb.times["primary_t"]
-#print(datetime.timedelta(seconds=seconds))
-
-
-leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?top=10".format(game.id, category.id)))
-#print(leaderboard)
-
-pb_list = []
-
-for run in leaderboard.runs:
-    seconds = run["run"].times["primary_t"]
-    #timedelta fucker pga har ikke vanlige datetime-greier. finne noe annet eller caste på en eller annen måte????
-    time = datetime.timedelta(seconds=seconds) #.strftime("%H:%M:%S")
-    print(time)
-    #TODO: slette days og timer??
-    pb_list.append(time)
-
-
 def create_csv(pb_list):
     df = pd.DataFrame({user: pb_list})
     df.to_csv(r'/Users/minipewz/Documents/YFF/webscraping\\speedrunleaderboard.csv', index=False)
-
-
-create_csv(pb_list)
 
 
 def bruh():
@@ -90,11 +56,6 @@ def bruh():
     ape = data_frame.to_csv(r'/Users/minipewz/Documents/YFF/webscraping\\speedrunleaderboard.csv', index=False)
 
     print(ape)
-
-
-#leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?embed=variables".format(game.id, category.id)))
-#print(leaderboard)
-
 
 
 def find_game(name):
@@ -120,14 +81,6 @@ def find_user(username):
     return dt.User(api, data=api.get("users/{}".format(username)))
 
 
-game = find_game("Celeste")
-category = find_category(game, "Any%")
-#print(game)
-#print(category)
-user = find_user("MiniPeWZ")
-#print(user)
-
-
 def get_personal_best(user, category):
     for pb in user.personal_bests:
         run = pb["run"]
@@ -135,35 +88,10 @@ def get_personal_best(user, category):
             return run
 
 
-pb = get_personal_best(user, category)
-#print(pb)
-time = "primary_t"
-
-
-seconds = pb.times["primary_t"]
-#print(datetime.timedelta(seconds=seconds))
-
-
-leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?top=10".format(game.id, category.id)))
-#print(leaderboard)
-
-pb_list = []
-
-for run in leaderboard.runs:
-    seconds = run["run"].times["primary_t"]
-    #timedelta fucker pga har ikke vanlige datetime-greier. finne noe annet eller caste på en eller annen måte????
-    time = datetime.timedelta(seconds=seconds) #.strftime("%H:%M:%S")
-    print(time)
-    #TODO: slette days og timer??
-    pb_list.append(time)
-
 
 def create_csv(pb_list):
     df = pd.DataFrame({user: pb_list})
     df.to_csv(r'/Users/minipewz/Documents/YFF/webscraping\\speedrunleaderboard.csv', index=False)
-
-
-create_csv(pb_list)
 
 
 def bruh():
@@ -173,7 +101,51 @@ def bruh():
     print(ape)
 
 
-#leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?embed=variables".format(game.id, category.id)))
-#print(leaderboard)
+if __name__ == "__main__":
+    game = find_game("Celeste")
+    category = find_category(game, "Any%")
+    # print(game)
+    # print(category)
+    user = find_user("MiniPeWZ")
+    # print(user)
 
 
+    pb = get_personal_best(user, category)
+    # print(pb)
+    time = "primary_t"
+
+    seconds = pb.times["primary_t"]
+    # print(datetime.timedelta(seconds=seconds))
+
+    leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?top=10".format(game.id, category.id)))
+    # print(leaderboard)
+
+    game = find_game("Celeste")
+    category = find_category(game, "Any%")
+    # print(game)
+    # print(category)
+    user = find_user("MiniPeWZ")
+    # print(user)
+    pb = get_personal_best(user, category)
+    # print(pb)
+    time = "primary_t"
+
+    seconds = pb.times["primary_t"]
+    # print(datetime.timedelta(seconds=seconds))
+
+    leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?top=10".format(game.id, category.id)))
+    # print(leaderboard)
+    pb_list = []
+    for run in leaderboard.runs:
+        seconds = run["run"].times["primary_t"]
+        # timedelta fucker pga har ikke vanlige datetime-greier. finne noe annet eller caste på en eller annen måte????
+        time = datetime.timedelta(seconds=seconds)  # .strftime("%H:%M:%S")
+        print(time)
+        # TODO: slette days og timer??
+        pb_list.append(time)
+
+
+    create_csv(pb_list)
+
+# leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?embed=variables".format(game.id, category.id)))
+# print(leaderboard)
