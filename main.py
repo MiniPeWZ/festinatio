@@ -1,13 +1,4 @@
 import srcomapi, srcomapi.datatypes as dt
-import numpy as np
-import pandas as pd
-import datetime
-
-api = srcomapi.SpeedrunCom()
-api.debug = 1
-name = "Celeste"
-import srcomapi, srcomapi.datatypes as dt
-import numpy as np
 import pandas as pd
 import datetime
 
@@ -23,9 +14,6 @@ def find_game(name):
         if game.name == "Celeste":
             return game
     return None
-
-
-# print(find_game)
 
 
 def find_category(game, name):
@@ -67,9 +55,6 @@ def find_game(name):
     return None
 
 
-# print(find_game)
-
-
 def find_category(game, name):
     for category in game.categories:
         if category.name == name:
@@ -86,7 +71,6 @@ def get_personal_best(user, category):
         run = pb["run"]
         if run.category == category.id:
             return run
-
 
 
 def create_csv(pb_list):
@@ -104,37 +88,12 @@ def bruh():
 if __name__ == "__main__":
     game = find_game("Celeste")
     category = find_category(game, "Any%")
-    # print(game)
-    # print(category)
     user = find_user("MiniPeWZ")
-    # print(user)
-
-
     pb = get_personal_best(user, category)
-    # print(pb)
     time = "primary_t"
-
     seconds = pb.times["primary_t"]
-    # print(datetime.timedelta(seconds=seconds))
 
     leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?top=10".format(game.id, category.id)))
-    # print(leaderboard)
-
-    game = find_game("Celeste")
-    category = find_category(game, "Any%")
-    # print(game)
-    # print(category)
-    user = find_user("MiniPeWZ")
-    # print(user)
-    pb = get_personal_best(user, category)
-    # print(pb)
-    time = "primary_t"
-
-    seconds = pb.times["primary_t"]
-    # print(datetime.timedelta(seconds=seconds))
-
-    leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?top=10".format(game.id, category.id)))
-    # print(leaderboard)
     pb_list = []
     for run in leaderboard.runs:
         seconds = run["run"].times["primary_t"]
@@ -144,8 +103,4 @@ if __name__ == "__main__":
         # TODO: slette days og timer??
         pb_list.append(time)
 
-
     create_csv(pb_list)
-
-# leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?embed=variables".format(game.id, category.id)))
-# print(leaderboard)
