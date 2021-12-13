@@ -33,10 +33,18 @@ def get_personal_best(user, category):
         if run.category == category.id:
             return run
 
-
-def create_csv(pb_list):
-    df = pd.DataFrame({user: pb_list})
+#place, time, player
+def create_csv(highscores):
+    columns=["place", "time", "player"]
+    data = []
+    place = 1
+    for hs in highscores:
+        print(pb)
+        l=[hs["place"], hs["name"], hs["personal_best"]]
+        data.append(l)
+    df = pd.DataFrame(data, columns=columns)
     df.to_csv(r'/Users/minipewz/Documents/YFF/webscraping\\speedrunleaderboard.csv', index=False)
+    print(df)
 
 
 def bruh():
@@ -55,13 +63,16 @@ if __name__ == "__main__":
     seconds = pb.times["primary_t"]
 
     leaderboard = dt.Leaderboard(api, data=api.get("leaderboards/{}/category/{}?top=10".format(game.id, category.id)))
-    pb_list = []
+    highscores = []
     for run in leaderboard.runs:
         seconds = run["run"].times["primary_t"]
-        # timedelta fucker pga har ikke vanlige datetime-greier. finne noe annet eller caste på en eller annen måte????
-        time = datetime.timedelta(seconds=seconds)  # .strftime("%H:%M:%S")
-        print(time)
-        # TODO: slette days og timer??
-        pb_list.append(time)
+        time = datetime.timedelta(seconds=seconds)
+        highscore ={
+                "place": 1,
+                "name": run["run"].players[0].name,
+                "personal_best": str(time)
+        }
 
-    create_csv(pb_list)
+        highscores.append(highscore)
+
+    create_csv(highscores)
