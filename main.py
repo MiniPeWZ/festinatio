@@ -35,7 +35,7 @@ def get_personal_best(user, category):
 
 #place, time, player
 def create_csv(highscores):
-    columns=["place", "time", "player"]
+    columns=["place", "player", "time"]
     data = []
     place = 1
     for hs in highscores:
@@ -43,7 +43,7 @@ def create_csv(highscores):
         l=[hs["place"], hs["name"], hs["personal_best"]]
         data.append(l)
     df = pd.DataFrame(data, columns=columns)
-    df.to_csv(r'/Users/minipewz/Documents/YFF/webscraping\\speedrunleaderboard.csv', index=False)
+    df.to_csv(r'/Users/minipewz/Documents/YFF/bruh\\speedrunleaderboard.csv', index=False)
     print(df)
 
 
@@ -67,8 +67,9 @@ if __name__ == "__main__":
     for run in leaderboard.runs:
         seconds = run["run"].times["primary_t"]
         time = datetime.timedelta(seconds=seconds)
+        #place user, personal_bests, 0, 'place'
         highscore ={
-                "place": 1,
+                "place": 0,
                 "name": run["run"].players[0].name,
                 "personal_best": str(time)
         }
