@@ -44,6 +44,7 @@ def create_csv(highscores):
         data.append(l)
     df = pd.DataFrame(data, columns=columns)
     df.to_csv(r'/Users/minipewz/Documents/YFF/bruh\\speedrunleaderboard.csv', index=False)
+
     print(df)
 
 
