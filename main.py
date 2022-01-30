@@ -1,7 +1,15 @@
 import srcomapi, srcomapi.datatypes as dt
 import pandas as pd
 import datetime
+import mysql.connector
+mydb =mysql.connector.connect(host="localhost", user="root", passwd="Muffe123")
 
+print(mydb)
+if(mydb):
+    print("successful")
+
+else:
+    print("error")
 api = srcomapi.SpeedrunCom()
 api.debug = 1
 name = "Celeste"
