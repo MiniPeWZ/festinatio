@@ -2,7 +2,7 @@ import srcomapi, srcomapi.datatypes as dt
 import pandas as pd
 import datetime
 import mysql.connector
-mydb =mysql.connector.connect(host="localhost", user="root", passwd="Muffe123")
+mydb =mysql.connector.connect(host="localhost", user="root", passwd="littlewolfie")
 
 print(mydb)
 if(mydb):
